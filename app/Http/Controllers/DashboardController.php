@@ -10,11 +10,11 @@ class DashboardController extends Controller
         $data = array(
             "title" => "Dashboard",
             "menuDashboard" => "active",
-            "menuPengguna" => "active",
         );
 
         return view('dashboard', $data);
     }
 }
+
 
 
