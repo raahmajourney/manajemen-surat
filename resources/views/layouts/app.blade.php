@@ -19,6 +19,9 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin/css/sb-admin-2.min.css') }}"rel="stylesheet"> 
 
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -65,7 +68,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item {{ $menudisposisi ?? '' }}" >
-                <a class="nav-link" href="{{ route('disposisi') }}">
+                <a class="nav-link" href="{{ route('disposisi.index') }}">
                     <i class="fas fa-fw fa-paper-plane"></i>
                     <span>Disposisi</span></a>
             </li>
@@ -110,10 +113,6 @@
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
@@ -224,6 +223,9 @@
 
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
+
+        <!-- SweetAlert2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>

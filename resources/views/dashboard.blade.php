@@ -13,7 +13,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Surat Masuk</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahSuratMasuk }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -37,7 +37,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">0</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $jumlahSuratKeluar }}</div>
                                 </div>
                             </div>
                         </div>  
@@ -61,7 +61,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                 Surat Keputusan</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahSuratKeputusan }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-user fa-fw fa-2x text-gray-300"></i>
@@ -92,7 +92,7 @@
                     </div>
                     <!-- Tombol Lihat Detail -->
                     <div class="mt-3 text-right">
-                        <a href="{{ route('disposisi') }}" class="btn btn-secondary btn-sm">Lihat Detail</a>
+                        <a href="{{ route('disposisi.index') }}" class="btn btn-secondary btn-sm">Lihat Detail</a>
                     </div>
                 </div>
             </div>

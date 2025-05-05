@@ -15,39 +15,39 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="{{ route('disposisi.store') }}" method="POST">
+          @csrf
           <div class="form-group">
             <label for="id_surat">Pilih Surat</label>
-            <select class="form-control" id="id_surat">
+            <select class="form-control" id="id_surat" name="id_surat">
               <option value="">-- Pilih Surat --</option>
-              <option value="1">001/SRT/IV/2025 - Undangan Rapat</option>
-              <option value="2">002/SRT/IV/2025 - Permohonan Data</option>
-              <!-- Data surat lainnya -->
-            </select>
+              @foreach ($surats as $surat)
+                  <option value="{{ $surat->id }}">{{ $surat->nomor_surat }} - {{ $surat->judul }}</option>
+              @endforeach
+          </select>          
           </div>
 
           <div class="form-group">
             <label for="catatan_disposisi">Catatan Disposisi</label>
-            <textarea class="form-control" id="catatan_disposisi" rows="3" placeholder="Masukkan catatan disposisi..."></textarea>
+            <textarea class="form-control" id="catatan_disposisi" name="catatan_disposisi" rows="3" placeholder="Masukkan catatan disposisi..."></textarea>
           </div>
 
           <div class="form-group">
             <label for="id_unit_kerja">Unit Kerja Tujuan</label>
-            <select class="form-control" id="id_unit_kerja">
+            <select class="form-control" id="id_unit_kerja" name="id_unit_kerja">
               <option value="">-- Pilih Unit Kerja --</option>
-              <option value="1">Bagian Administrasi</option>
-              <option value="2">Bagian Keuangan</option>
-              <option value="3">Bagian Akademik</option>
-              <!-- Data unit kerja lainnya -->
-            </select>
+              @foreach ($unitKerjas as $unit)
+              <option value="{{ $unit->id }}">{{ $unit->nama_unit_kerja }}</option>
+              @endforeach
+          </select>
           </div>
-        </form>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-success">Simpan</button>
-      </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -83,19 +83,17 @@
         </tr>
       </thead>
       <tbody>
+        @foreach ($disposisis as $index => $d)
         <tr>
-          <td>1</td>
-          <td>001/SRT/IV/2025</td>
-          <td>Undangan Rapat</td>
-          <td>Segera ditindaklanjuti</td>
-          <td>Bagian Administrasi</td>
-          <td>
-            <div class="d-flex flex-column flex-md-row">
-              <a href="#" class="btn btn-sm btn-primary mr-md-2 mb-2 mb-md-0">Edit</a>
-              <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-            </div>
-          </td>
+            <td>{{ $index + 1 }}</td>
+            <td>{{ $d->surat->nomor_surat }}</td>
+            <td>{{ $d->surat->judul }}</td>
+            <td>{{ $d->catatan_disposisi }}</td>
+            <td>{{ $d->unitKerja->nama_unit_kerja }}</td>
+
         </tr>
+        @endforeach
+        
         <!-- Data disposisi lainnya -->
       </tbody>
     </table>

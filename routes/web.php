@@ -41,7 +41,9 @@ Route::get('suratkeputusan/{id}/edit', [SuratKeputusanController::class,'edit'])
 Route::delete('suratkeputusan/{id}', [SuratKeputusanController::class,'destroy'])->name('suratkeputusan.destroy');
 Route::put('suratkeputusan/{id}', [SuratKeputusanController::class,'update'])->name('suratkeputusan.update');
 
-Route::get('disposisi', [DisposisiController::class,'index'])->name('disposisi');
+Route::get('disposisi', [DisposisiController::class,'index'])->name('disposisi.index');
+Route::post('disposisi', [DisposisiController::class,'store'])->name('disposisi.store');
+
 
 Route::get('unitkerja', [UnitkerjaController::class,'unitkerja'])->name('unitkerja');
 Route::post('unitkerja', [UnitkerjaController::class, 'store'])->name('unitkerja.store');

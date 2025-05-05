@@ -157,13 +157,39 @@
                   <img src="{{ asset('img/edit.png') }}" alt="Edit" width="20" height="20">
                 </a>
                 
-                <form action="{{ route('suratmasuk.destroy', $surat->id) }}" method="POST"  onsubmit="return confirm('Apakah Anda yakin ingin menghapus surat ini?')" class="mb-2">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-sm" >
-                      <img src="{{ asset('img/delete.png') }}" alt="Hapus" width="20" height="20">
-                    </button>
-                </form>
+                <form action="{{ route('suratmasuk.destroy', $surat->id) }}" method="POST" class="form-delete">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-sm">
+                    <img src="{{ asset('img/delete.png') }}" alt="Hapus" width="20" height="20">
+                  </button>
+              </form>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    document.querySelectorAll('.form-delete').forEach(form => {
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            Swal.fire({
+                                title: 'Apakah Anda yakin?',
+                                text: "Data akan dihapus secara permanen!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#d33',
+                                cancelButtonColor: '#3085d6',
+                                confirmButtonText: 'Ya, hapus!',
+                                cancelButtonText: 'Batal'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    form.submit();
+                                }
+                            });
+                        });
+                    });
+                });
+                </script>
+                
+              
             </div>
         </td>
         
@@ -197,4 +223,29 @@
     });
 </script>
 @endif
+
+
+  @if (session('success'))
+  <script>
+      Swal.fire({
+          icon: 'success',
+          title: 'Berhasil',
+          text: '{{ session('success') }}',
+          showConfirmButton: false,
+          timer: 2000
+      });
+  </script>
+  @endif
+
+  @if (session('error'))
+  <script>
+      Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: '{{ session('error') }}',
+          showConfirmButton: false,
+          timer: 3000
+      });
+  </script>
+  @endif
 
