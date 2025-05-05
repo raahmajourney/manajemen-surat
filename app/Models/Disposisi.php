@@ -15,6 +15,7 @@ class Disposisi extends Model
         'id_surat',
         'catatan_disposisi',
         'id_unit_kerja',
+        'file_disposisi',
     ];
 
 

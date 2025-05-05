@@ -80,9 +80,12 @@
           </div>
         
           <div class="form-group">
-            <label for="file_surat">Upload File Surat (Opsional)</label>
-            <input type="file" class="form-control-file" id="file_surat" name="file_surat">
-          </div>
+            <label for="file_surat">Upload File Surat (PDF)</label>
+            <input type="file" class="form-control-file" id="file_surat" name="file_surat" accept="application/pdf">
+            @error('file_surat')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

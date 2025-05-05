@@ -16,7 +16,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahSuratMasuk }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            <i class="fas fa-envelope-open-text fa-2x text-gray-300"></i>
                         </div>
                     </div>
                       <!-- Tombol Lihat Detail -->
@@ -42,7 +42,7 @@
                             </div>
                         </div>  
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <i class="fas fa-envelope-open-text fa-2x text-gray-300"></i>
                         </div>
                     </div>
                     <!-- Tombol Lihat Detail -->
@@ -64,7 +64,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahSuratKeputusan }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-user fa-fw fa-2x text-gray-300"></i>
+                            <i class="fas 	fa-file-signature fa-fw fa-2x text-gray-300"></i>
                         </div>
                     </div>
                     <!-- Tombol Lihat Detail -->
@@ -86,7 +86,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            <i class="fas 	fa-share-square fa-2x text-gray-300"></i>
 
                         </div>
                     </div>

@@ -33,14 +33,14 @@ class SuratKeputusanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nomor_surat' => 'required|string',
+            'nomor_surat' => 'required|string|unique:surats,nomor_surat',
             'judul' => 'required|string',
             'isi' => 'required|string',
             'id_jenis_surat' => 'required|integer',
             'nama_pengirim' => 'required|string',
             'tanggal_surat' => 'required|date',
             'status' => 'required|in:aktif,arsip',
-            'file_surat' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'file_surat' => 'nullable|file|mimes:pdf|max:2048',
         ]);
     
         $filePath = null;
@@ -85,14 +85,14 @@ class SuratKeputusanController extends Controller
         $surat = Surat::findOrFail($id);
 
         $validated = $request->validate([
-            'nomor_surat' => 'required|string',
+            'nomor_surat' => 'required|string|unique:surats,nomor_surat,' . $id,
             'judul' => 'required|string',
             'isi' => 'required|string',
             'id_jenis_surat' => 'required|integer',
             'nama_pengirim' => 'required|string',
             'tanggal_surat' => 'required|date',
             'status' => 'required|in:aktif,arsip',
-            'file_surat' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'file_surat' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         $filePath = $surat->file_surat;

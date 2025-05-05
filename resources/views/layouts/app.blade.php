@@ -85,6 +85,14 @@
                             </a>
                         </li>
 
+                        <!-- Nav Item - Pages Collapse Menu -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" >
+                                <i class="fas fa-file-alt fa-fw "></i>
+                                <span>Log Surat</span>
+                            </a>
+                        </li>
+
                           <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>

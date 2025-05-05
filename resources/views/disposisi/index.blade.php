@@ -15,7 +15,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="{{ route('disposisi.store') }}" method="POST">
+        <form action="{{ route('disposisi.store') }}" method="POST" enctype="multipart/form-data">
           @csrf
           <div class="form-group">
             <label for="id_surat">Pilih Surat</label>
@@ -41,7 +41,15 @@
               @endforeach
           </select>
           </div>
+
+          <div class="form-group">
+            <label for="file_disposisi">Upload File Bukti Disposisi</label>
+            <input type="file" class="form-control-file" id="file_disposisi" name="file_disposisi">
+          </div>
+          
         </div>
+
+        
         
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -79,6 +87,7 @@
           <th>Judul Surat</th>
           <th>Catatan Disposisi</th>
           <th>Unit Kerja Tujuan</th>
+          <th>File</th>
           <th>Aksi</th>
         </tr>
       </thead>
