@@ -18,6 +18,17 @@ class FormulirSuratController extends Controller
         return view('formulirsurat.index', compact('title', 'formulirs', 'unitKerjas'));
     }
 
+
+    public function create()
+{
+    return view('formulirsurat.create', [
+        'title' => 'Tambah Formulir Surat',
+        'unitKerjas' => UnitKerja::all(),
+        'menuformulir' => 'active'
+    ]);
+}
+
+
     public function store(Request $request)
     {
         $request->validate([

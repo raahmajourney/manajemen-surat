@@ -60,3 +60,4 @@ Route::get('unitkerja/{id}/edit', [UnitkerjaController::class, 'edit'])->name('u
 Route::delete('unitkerja/{id}', [UnitkerjaController::class, 'destroy'])->name('unitkerja.destroy');
 
 Route::get('formulirsurat', [FormulirSuratController::class,'index'])->name('formulirsurat');
+Route::get('formulirsurat/create', [FormulirSuratController::class, 'create'])->name('formulirsurat.create');

@@ -14,6 +14,8 @@ class CreateFormulirSuratsTable extends Migration
             $table->unsignedBigInteger('id_uker_pengelola');
             $table->char('tampilkan', 5)->default('TIDAK'); // YA atau TIDAK
             $table->string('template_surat')->nullable();
+            $table->char('visibilitas', 7)->default('Private');
+
             $table->timestamps();
 
             $table->foreign('id_uker_pengelola')->references('id')->on('unit_kerja')->onDelete('cascade');
