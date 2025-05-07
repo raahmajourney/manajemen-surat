@@ -98,8 +98,58 @@
             <td>{{ $d->surat->nomor_surat }}</td>
             <td>{{ $d->surat->judul }}</td>
             <td>{{ $d->catatan_disposisi }}</td>
-            <td>{{ $d->unitKerja->nama_unit_kerja }}</td>
+            <td>{{ $d->unitKerja?->nama_unit_kerja }}</td>
 
+            <td>
+              @if($d->file_disposisi)
+              <a href="{{ asset('storage/' . $d->file_disposisi) }}" target="_blank" class="btn btn-sm btn-info">Lihat File</a>
+            @else
+              -
+            @endif
+            </td>
+           
+            <td>
+              <div class="d-flex flex-column flex-md-row">
+                  <a href="{{ route('disposisi.edit', $d->id) }}" class="btn btn-sm  mr-md-2 mb-2 mb-md-0">
+                    <img src="{{ asset('img/edit.png') }}" alt="Edit" width="20" height="20">
+                  </a>
+                  
+                  <form action="{{ route('disposisi.destroy', $d->id) }}" method="POST" class="form-delete">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm">
+                      <img src="{{ asset('img/delete.png') }}" alt="Hapus" width="20" height="20">
+                    </button>
+                </form>
+  
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+                      document.querySelectorAll('.form-delete').forEach(form => {
+                          form.addEventListener('submit', function (e) {
+                              e.preventDefault();
+                              Swal.fire({
+                                  title: 'Apakah Anda yakin?',
+                                  text: "Data akan dihapus secara permanen!",
+                                  icon: 'warning',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#d33',
+                                  cancelButtonColor: '#3085d6',
+                                  confirmButtonText: 'Ya, hapus!',
+                                  cancelButtonText: 'Batal'
+                              }).then((result) => {
+                                  if (result.isConfirmed) {
+                                      form.submit();
+                                  }
+                              });
+                          });
+                      });
+                  });
+                  </script>
+                  
+                
+              </div>
+          </td>
+            
         </tr>
         @endforeach
         

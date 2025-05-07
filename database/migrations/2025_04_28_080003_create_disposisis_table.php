@@ -13,7 +13,7 @@ class CreateDisposisisTable extends Migration
             $table->uuid('id_surat'); // FK ke tabel 'surats'
             $table->string('catatan_disposisi'); // Catatan Disposisi
             $table->unsignedBigInteger('id_unit_kerja'); // FK ke tabel 'unit_kerjas'
-            $table->string('file_surat')->nullable();
+            $table->string('file_disposisi')->nullable();
             $table->timestamps();
 
             // Relasi ke tabel 'surats'

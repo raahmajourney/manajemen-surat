@@ -33,6 +33,23 @@ class SuratMasukController extends Controller
             return view('suratmasuk.index', $data);
     }
 
+    // menampilkan detail surat masuk
+    public function show($id)
+    {
+        $surat = Surat::with('jenisSurat')->findOrFail($id);
+
+        $data = [
+            'title' => 'Detail Surat Masuk',
+            'menusurat' => 'active',
+            'collapseSurat' => 'show',
+            'suratmasuk' => 'active',
+            'surat' => $surat,
+        ];
+
+        return view('suratmasuk.tampil', $data);
+    }
+
+
     public function store(Request $request)
 {
     $validated = $request->validate([
@@ -125,7 +142,7 @@ public function destroy($id)
 {
     $surat = Surat::findOrFail($id);
     
-    // Jika ada file surat, hapus file-nya
+    
     if ($surat->file_surat) {
         Storage::delete('public/' . $surat->file_surat);
     }

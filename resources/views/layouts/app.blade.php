@@ -85,6 +85,14 @@
                             </a>
                         </li>
 
+                          <!-- Nav Item - Pages Collapse Menu -->
+                          <li class="nav-item {{ $menuformulir ?? '' }}">
+                            <a class="nav-link" href="{{ route('formulirsurat') }}" >
+                                <i class="fas fa-file-alt fa-fw "></i>
+                                <span>Formulir Surat</span>
+                            </a>
+                        </li>
+
                         <!-- Nav Item - Pages Collapse Menu -->
                         <li class="nav-item">
                             <a class="nav-link" href="#" >
@@ -92,6 +100,7 @@
                                 <span>Log Surat</span>
                             </a>
                         </li>
+                      
 
                           <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -235,6 +244,8 @@
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+        
 
 </body>
 </html>

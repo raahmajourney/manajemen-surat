@@ -134,7 +134,7 @@
       </thead>
       <tbody>
         @foreach($surats as $no => $surat)
-        <tr>
+        <tr onclick="window.location='{{ route('suratmasuk.show', $surat->id) }}';" style="cursor: pointer;">
           <td>{{ $no + 1 }}</td>
           <td>{{ $surat->nomor_surat }}</td>
           <td>{{ $surat->judul }}</td>
@@ -148,7 +148,7 @@
           </td>
           <td>
             @if($surat->file_surat)
-              <a href="{{ asset('storage/' . $surat->file_surat) }}" target="_blank" class="btn btn-sm btn-info">Lihat File</a>
+              <a href="{{ asset('storage/' . $surat->file_surat) }}" target="_blank" class="btn btn-sm btn-info" onclick="event.stopPropagation();">Lihat File</a>
             @else
               -
             @endif
@@ -156,11 +156,11 @@
 
           <td>
             <div class="d-flex flex-column flex-md-row">
-                <a href="{{ route('suratmasuk.edit', $surat->id) }}" class="btn btn-sm  mr-md-2 mb-2 mb-md-0">
+                <a href="{{ route('suratmasuk.edit', $surat->id) }}" class="btn btn-sm  mr-md-2 mb-2 mb-md-0" onclick="event.stopPropagation();">
                   <img src="{{ asset('img/edit.png') }}" alt="Edit" width="20" height="20">
                 </a>
                 
-                <form action="{{ route('suratmasuk.destroy', $surat->id) }}" method="POST" class="form-delete">
+                <form action="{{ route('suratmasuk.destroy', $surat->id) }}" method="POST" class="form-delete" onclick="event.stopPropagation();">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="btn btn-sm">
@@ -251,4 +251,7 @@
       });
   </script>
   @endif
+
+
+
 

@@ -30,6 +30,17 @@ class SuratKeluarController extends Controller
     }
 
 
+    public function show($id)
+{
+    $surat = Surat::with('jenisSurat')->findOrFail($id);
+
+    return view('suratkeluar.tampil', [
+        'title' => 'Detail Surat',
+        'surat' => $surat
+    ]);
+}
+
+    
     
     public function store(Request $request)
 {

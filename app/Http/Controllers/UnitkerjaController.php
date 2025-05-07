@@ -65,6 +65,12 @@ class UnitkerjaController extends Controller
     public function destroy($id)
     {
         $unit = UnitKerja::findOrFail($id);
+
+        if ($unit->surats()->exists() || $unit->disposisis()->exists()) {
+            return redirect()->route('unitkerja')
+                ->with('error', 'Unit Kerja tidak dapat dihapus karena telah memiliki riwayat Surat atau Disposisi.');
+        }
+
         $unit->delete();
 
         return redirect()->route('unitkerja')->with('success', 'Unit Kerja berhasil dihapus.');

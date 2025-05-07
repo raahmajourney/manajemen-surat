@@ -29,6 +29,16 @@ class SuratKeputusanController extends Controller
             return view('suratkeputusan.index', $data);
     }
 
+    public function show($id)
+    {
+        $surat = Surat::with('jenisSurat')->findOrFail($id);
+    
+        return view('suratkeputusan.tampil', [
+            'title' => 'Detail Surat',
+            'surat' => $surat
+        ]);
+    }
+
         
     public function store(Request $request)
     {

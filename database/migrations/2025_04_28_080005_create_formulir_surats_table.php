@@ -16,7 +16,7 @@ class CreateFormulirSuratsTable extends Migration
             $table->string('template_surat')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_uker_pengelola')->references('id')->on('unit_kerjas')->onDelete('cascade');
+            $table->foreign('id_uker_pengelola')->references('id')->on('unit_kerja')->onDelete('cascade');
         });
     }
 
