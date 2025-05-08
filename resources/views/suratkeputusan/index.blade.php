@@ -108,11 +108,20 @@
         <option>50</option>
       </select> 
       
-      <label for="search" class="mr-2 mb-2 mb-md-0">Cari:</label>
-      <input type="text" id="search" class="form-control w-auto">
+      <form method="GET" action="{{ route('suratkeputusan') }}" class="form-inline">
+        <label for="search" class="mr-2">Cari:</label>
+        <input type="text" name="search" id="search" class="form-control mr-2"
+               value="{{ request('search') }}" placeholder="Cari surat...">
+        <button type="submit" class="btn btn-primary">Cari</button>
+    </form>
+    
+
     </div>
   </div>
 
+  @if($surats->isEmpty())
+  <div class="alert alert-warning">Tidak ada data surat ditemukan.</div>
+  @endif
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead class="thead-light">

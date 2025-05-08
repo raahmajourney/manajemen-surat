@@ -16,7 +16,7 @@ class DashboardController extends Controller
         "jumlahSuratMasuk" => Surat::where('id_jenis_surat', 1)->count(),
         "jumlahSuratKeluar" => Surat::where('id_jenis_surat', 2)->count(),
         "jumlahSuratKeputusan" => Surat::where('id_jenis_surat', 3)->count(),
-        //"jumlahSuratDisposisi" => Surat::where('id_jenis_surat', 4)->count(),
+        "jumlahSuratDisposisi" => Surat::where('id_jenis_surat', 4)->count(),
             
         );
 

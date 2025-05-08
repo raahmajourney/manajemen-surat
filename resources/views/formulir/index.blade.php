@@ -31,13 +31,26 @@
       </div>
 
       <div class="form-group">
+        <label for="visibilitas">Visibilitas</label>
+        <select class="form-control" id="visibilitas" name="visibilitas" required>
+          <option value="Private" selected>Private</option>
+          <option value="Public">Public</option>
+        </select>
+      </div>
+      
+
+      <div class="form-group">
         <label for="template_surat">Upload Template Surat (Opsional)</label>
         <input type="file" class="form-control-file" id="template_surat" name="template_surat">
       </div>
 
       <button type="submit" class="btn btn-success">Simpan</button>
       <a href="{{ route('formulirsurat') }}" class="btn btn-secondary">Kembali</a>
+
+
     </form>
   </div>
 </div>
+
+
 @endsection

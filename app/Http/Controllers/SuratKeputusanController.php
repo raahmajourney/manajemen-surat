@@ -10,23 +10,29 @@ use Illuminate\Support\Facades\Storage;
 
 class SuratKeputusanController extends Controller
 {
-    public function index() {
-        $data = array(
-            "title" => "Surat Keputusan",
-            "menuSuratKeluar" => "active",
-            "collapseSurat" => "show",
-            "suratkeputusan" => "active",
+    public function index(Request $request) {
+        $query = Surat::with('jenisSurat')
+        ->where('id_jenis_surat', 3) // Hanya Surat Keputusan
+        ->orderBy('created_at', 'desc');
 
-            "surats" => Surat::with('jenisSurat')
-            ->where('id_jenis_surat', 3) 
-            ->orderBy('created_at', 'desc')
-            ->get(),
+    if ($request->has('search') && $request->search != '') {
+        $query->where(function ($q) use ($request) {
+            $q->where('nomor_surat', 'like', '%' . $request->search . '%')
+              ->orWhere('judul', 'like', '%' . $request->search . '%')
+              ->orWhere('nama_pengirim', 'like', '%' . $request->search . '%');
+        });
+    }
 
+    $data = array(
+        "title" => "Surat Keputusan",
+        "menuSuratKeluar" => "active",
+        "collapseSurat" => "show",
+        "suratkeputusan" => "active",
+        "surats" => $query->get(),
+        "jenisSurats" => JenisSurat::all(),
+    );
 
-
-            'jenisSurats' => JenisSurat::all(),
-        );
-            return view('suratkeputusan.index', $data);
+    return view('suratkeputusan.index', $data);
     }
 
     public function show($id)

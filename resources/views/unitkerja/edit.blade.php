@@ -14,9 +14,16 @@
     </div>
 
     <div class="form-group">
-      <label>Jenis Unit Kerja</label>
-      <input type="text" name="jenis_unit_kerja" value="{{ $unit->jenis_unit_kerja }}" class="form-control" required>
-    </div>
+      <label for="tipe_unit">Tipe/Level Unit Kerja</label>
+      <select name="jenis_unit_kerja" class="form-control" required>
+          <option value="Rektorat">Rektorat</option>
+          <option value="Fakultas">Fakultas</option>
+          <option value="Prodi">Program Studi</option>
+          <option value="Biro/UPT">Biro/UPT</option>
+      </select>
+  </div>
+  
+
 
     <div class="form-group">
       <label>Parent Unit (Opsional)</label>

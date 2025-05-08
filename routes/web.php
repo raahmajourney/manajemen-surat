@@ -8,7 +8,8 @@ use App\Http\Controllers\SuratMasukController;
 use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratKeputusanController;
 use App\Http\Controllers\DisposisiController;
-use App\Http\Controllers\FormulirSuratController;
+use App\Http\Controllers\DataFormulirController;
+use App\Http\Controllers\FormulirController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -59,5 +60,8 @@ Route::put('unitkerja/{id}', [UnitkerjaController::class, 'update'])->name('unit
 Route::get('unitkerja/{id}/edit', [UnitkerjaController::class, 'edit'])->name('unitkerja.edit');
 Route::delete('unitkerja/{id}', [UnitkerjaController::class, 'destroy'])->name('unitkerja.destroy');
 
-Route::get('formulirsurat', [FormulirSuratController::class,'index'])->name('formulirsurat');
-Route::get('formulirsurat/create', [FormulirSuratController::class, 'create'])->name('formulirsurat.create');
+Route::get('formulirsurat', [DataFormulirController::class,'index'])->name('formulirsurat');
+Route::get('formulirsurat/create', [DataFormulirController::class, 'create'])->name('formulirsurat.create');
+
+
+Route::get('formulir', [FormulirController::class,'index'])->name('formulir');

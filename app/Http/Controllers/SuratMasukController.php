@@ -13,25 +13,41 @@ use Illuminate\Support\Facades\Auth;
 
 class SuratMasukController extends Controller
 {
-    public function index() {
-        $data = array(
-            "title" => "Surat Masuk",
-            "menusurat" => "active",
-            "collapseSurat" => "show", // untuk membuka dropdown
-            "suratmasuk" => "active",
+    public function index(Request $request) {
 
 
-            "surats" => Surat::with('jenisSurat')
-            ->where('id_jenis_surat', 1) // hanya Surat Masuk
-            ->orderBy('created_at', 'desc')
-            ->get(),
-
-
-
+        $title = "Surat Masuk";
+        $search = $request->input('search');
+    
+        // Query dasar: hanya surat masuk
+        $query = Surat::with('jenisSurat')
+            ->where('id_jenis_surat', 1);
+    
+        // Tambahkan filter pencarian jika ada input search
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'like', "%{$search}%")
+                  ->orWhere('judul', 'like', "%{$search}%")
+                  ->orWhere('nama_pengirim', 'like', "%{$search}%");
+            });
+        }
+    
+        // Eksekusi query
+        $surats = $query->orderBy('created_at', 'desc')->paginate(10);
+    
+        // Data untuk view
+        return view('suratmasuk.index', [
+            'title' => $title,
+            'menusurat' => 'active',
+            'collapseSurat' => 'show',
+            'suratmasuk' => 'active',
+            'surats' => $surats,
             'jenisSurats' => JenisSurat::all(),
-        );
-            return view('suratmasuk.index', $data);
+        ]);
     }
+
+
+    
 
     // menampilkan detail surat masuk
     public function show($id)

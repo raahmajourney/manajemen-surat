@@ -10,23 +10,33 @@ use Illuminate\Support\Facades\Storage;
 
 class SuratKeluarController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        $search = $request->query('search');
+
+        $query = Surat::with('jenisSurat')
+            ->where('id_jenis_surat', 2)
+            ->orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('nomor_surat', 'like', "%{$search}%")
+                ->orWhere('judul', 'like', "%{$search}%")
+                ->orWhere('nama_pengirim', 'like', "%{$search}%")
+                ->orWhere('isi', 'like', "%{$search}%");
+            });
+        }
+
         $data = array(
             "title" => "Surat Keluar",
             "menuSuratKeluar" => "active",
             "collapseSurat" => "show",
             "suratkeluar" => "active",
 
-            "surats" => Surat::with('jenisSurat')
-            ->where('id_jenis_surat', 2) // hanya Surat Keluar
-            ->orderBy('created_at', 'desc')
-            ->get(),
-
-
-
+            "surats" => $query->get(),
             'jenisSurats' => JenisSurat::all(),
         );
-            return view('suratkeluar.index', $data);
+
+        return view('suratkeluar.index', $data);
     }
 
 

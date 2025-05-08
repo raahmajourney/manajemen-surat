@@ -75,21 +75,28 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+            <li class="nav-item {{ $menuformulir ?? '' }}">
+                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseFormulir"
+                   aria-expanded="true" aria-controls="collapseFormulir">
+                    <i class="fas  fa-file-alt fa-envelope-open"></i>
+                    <span>Formulir</span>
+                </a>
+                <div id="collapseFormulir" class="collapse {{ $collapseFormulir ?? '' }}" aria-labelledby="headingFormulir" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ $dataformulir ?? '' }}" href="{{ route('formulirsurat') }}">Data Formulir</a>
+                        <a class="collapse-item {{ $templateformulir ?? '' }}" href="{{ route('formulir') }}">Template Formulir</a>
+                    </div>
+                </div>
+            </li>
+            
+            
 
-
-                        <!-- Nav Item - Pages Collapse Menu -->
-                        <li class="nav-item {{ $menuunitkerja ?? '' }}">
+                   
+             <!-- Nav Item - Pages Collapse Menu -->
+                         <li class="nav-item {{ $menuunitkerja ?? '' }}">
                             <a class="nav-link" href="{{ route('unitkerja') }}" >
                                 <i class="fas fa-user fa-fw "></i>
                                 <span>Unit Kerja</span>
-                            </a>
-                        </li>
-
-                          <!-- Nav Item - Pages Collapse Menu -->
-                          <li class="nav-item {{ $menuformulir ?? '' }}">
-                            <a class="nav-link" href="{{ route('formulirsurat') }}" >
-                                <i class="fas fa-file-alt fa-fw "></i>
-                                <span>Formulir Surat</span>
                             </a>
                         </li>
 
@@ -100,7 +107,8 @@
                                 <span>Log Surat</span>
                             </a>
                         </li>
-                      
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
 
                           <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

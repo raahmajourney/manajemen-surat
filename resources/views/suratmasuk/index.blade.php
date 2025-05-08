@@ -112,10 +112,20 @@
         <option>50</option>
       </select> 
       
-      <label for="search" class="mr-2 mb-2 mb-md-0">Cari:</label>
-      <input type="text" id="search" class="form-control w-auto">
+      <form method="GET" action="{{ route('suratmasuk') }}" class="form-inline">
+        <label for="search" class="mr-2">Cari:</label>
+        <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control mr-2" placeholder="Cari surat...">
+        <button type="submit" class="btn btn-primary">Cari</button>
+      </form>
+      
+
     </div>
   </div>
+
+  @if($surats->isEmpty())
+  <div class="alert alert-warning">Tidak ada data surat ditemukan.</div>
+@endif
+
 
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
@@ -205,16 +215,16 @@
     </table>
   </div>
 
-  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-    <span class="mb-2 mb-md-0">Menampilkan 1 ke 1 dari 1 data</span>
-    <nav>
-      <ul class="pagination mb-0">
-        <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
-      </ul>
-    </nav>
-  </div>
+ 
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <div>
+        Menampilkan {{ $surats->firstItem() }} sampai {{ $surats->lastItem() }} dari total {{ $surats->total() }} data
+    </div>
+    <div>
+        {{ $surats->appends(request()->query())->links() }}
+    </div>
+</div>
+
 </div>
 
 @endsection
