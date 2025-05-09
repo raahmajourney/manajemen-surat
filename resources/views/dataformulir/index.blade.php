@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+
+@if(session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+@endif
+
 @section('content')
 <h1 class="h3 mb-4 text-gray-800">{{ $title }}</h1>
 
@@ -38,9 +48,10 @@
           </td>
           <td>
             <div class="d-flex">
-              <a href="{{ route('formulirsurat.edit', $f->id) }}" class="btn btn-sm mr-2">
+              <a href="{{ route('formulir.edit', $f->id) }}" class="btn btn-sm mr-2">
                 <img src="{{ asset('img/edit.png') }}" alt="Edit" width="20">
               </a>
+
               <form action="{{ route('formulirsurat.destroy', $f->id) }}" method="POST" class="form-delete">
                 @csrf
                 @method('DELETE')
@@ -48,6 +59,8 @@
                   <img src="{{ asset('img/delete.png') }}" alt="Hapus" width="20">
                 </button>
               </form>
+              
+
             </div>
           </td>
         </tr>

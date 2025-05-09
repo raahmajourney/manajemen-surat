@@ -9,7 +9,7 @@ use App\Http\Controllers\SuratKeluarController;
 use App\Http\Controllers\SuratKeputusanController;
 use App\Http\Controllers\DisposisiController;
 use App\Http\Controllers\DataFormulirController;
-use App\Http\Controllers\FormulirController;
+use App\Http\Controllers\FormulirSuratController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,8 +60,14 @@ Route::put('unitkerja/{id}', [UnitkerjaController::class, 'update'])->name('unit
 Route::get('unitkerja/{id}/edit', [UnitkerjaController::class, 'edit'])->name('unitkerja.edit');
 Route::delete('unitkerja/{id}', [UnitkerjaController::class, 'destroy'])->name('unitkerja.destroy');
 
+
+Route::get('formulir', [FormulirSuratController::class,'index'])->name('formulir');
+Route::post('formulir', [FormulirSuratController::class,'store'])->name('formulir.store');
+
+
 Route::get('formulirsurat', [DataFormulirController::class,'index'])->name('formulirsurat');
-Route::get('formulirsurat/create', [DataFormulirController::class, 'create'])->name('formulirsurat.create');
+Route::get('dataformulir', [DataFormulirController::class, 'index'])->name('dataformulir.index');
+Route::delete('formulirsurat/{id}', [DataFormulirController::class, 'destroy'])->name('formulirsurat.destroy');
+Route::get('formulirsurat/{id}/edit', [DataFormulirController::class, 'edit'])->name('formulir.edit');
+Route::put('formulirsurat/{id}', [DataFormulirController::class, 'update'])->name('formulir.update');
 
-
-Route::get('formulir', [FormulirController::class,'index'])->name('formulir');

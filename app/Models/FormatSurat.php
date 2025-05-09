@@ -21,6 +21,6 @@ class FormatSurat extends Model
 
     public function formulirSurat()
     {
-        return $this->belongsTo(Formulir::class, 'id_formulir');
+        return $this->belongsTo(FormulirSurat::class, 'id_formulir');
     }
 }

@@ -5,7 +5,7 @@
 
 <div class="card shadow mb-4">
   <div class="card-body">
-    <form action="#" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('formulir.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <div class="form-group">
         <label for="nama_formulir">Nama Formulir</label>

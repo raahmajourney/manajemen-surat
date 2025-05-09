@@ -83,7 +83,7 @@
                 </a>
                 <div id="collapseFormulir" class="collapse {{ $collapseFormulir ?? '' }}" aria-labelledby="headingFormulir" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ $dataformulir ?? '' }}" href="{{ route('formulirsurat') }}">Data Formulir</a>
+                        <a class="collapse-item {{ $Dataformulir ?? '' }}" href="{{ route('dataformulir.index') }}">Data Formulir</a>
                         <a class="collapse-item {{ $templateformulir ?? '' }}" href="{{ route('formulir') }}">Template Formulir</a>
                     </div>
                 </div>

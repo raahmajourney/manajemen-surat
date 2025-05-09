@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Formulir;
+use App\Models\FormulirSurat;
+use Illuminate\Support\Facades\Storage;
 use App\Models\FormatSurat;
 use App\Models\UnitKerja;
 use Illuminate\Support\Str;
@@ -12,60 +13,69 @@ class DataFormulirController extends Controller
 {
     public function index()
     {
-        $title = 'Data Formulir Surat';
-        $menuformulir = "active";
-        $formulirs = Formulir::with('unitKerja')->get();
+        return view('dataformulir.index', [
+            'title' => 'Data Formulir Surat',
+            'Dataformulir' => 'active',
+            'collapseFormulir' => 'show',
+            'formulirs' => FormulirSurat::with('unitKerja')->get(),
+        ]);
+    }
+
+
+        public function destroy($id)
+    {
+        $formulir = FormulirSurat::findOrFail($id);
+
+        // Hapus file template jika ada
+        if ($formulir->template_surat && Storage::disk('public')->exists($formulir->template_surat)) {
+            Storage::disk('public')->delete($formulir->template_surat);
+        }
+
+        $formulir->delete();
+
+        return redirect()->route('formulirsurat')->with('success', 'Formulir berhasil dihapus.');
+    }
+
+    public function edit($id)
+    {
+        $formulir = FormulirSurat::findOrFail($id);
         $unitKerjas = UnitKerja::all();
 
-        return view('dataformulir.index', compact('title', 'formulirs', 'unitKerjas'));
+        return view('dataformulir.edit', [
+            'title' => 'Edit Formulir',
+            'formulir' => $formulir,
+            'unitKerjas' => $unitKerjas,
+        ]);
     }
 
 
-    public function create()
-{
-    return view('formulirsurat.create', [
-        'title' => 'Tambah Formulir Surat',
-        'unitKerjas' => UnitKerja::all(),
-        'menuformulir' => 'active',
-        'collapseFormulir' => 'show',
-        'dataformulir' => 'active', // Untuk submenu aktif
-    ]);
-}
-
-
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
+        $formulir = FormulirSurat::findOrFail($id);
+    
         $request->validate([
             'nama_formulir' => 'required|string|max:255',
-            'id_uker_pengelola' => 'required|exists:unit_kerjas,id',
-            'tampilkan' => 'in:YA,TIDAK',
+            'id_uker_pengelola' => 'required|exists:unit_kerja,id',
+            'tampilkan' => 'required|in:YA,TIDAK',
+            'visibilitas' => 'required|in:Private,Public',
             'template_surat' => 'nullable|file|mimes:pdf'
         ]);
-
-        $data = $request->only('nama_formulir', 'id_uker_pengelola', 'tampilkan');
-
+    
+        $formulir->nama_formulir = $request->nama_formulir;
+        $formulir->id_uker_pengelola = $request->id_uker_pengelola;
+        $formulir->tampilkan = $request->tampilkan;
+        $formulir->visibilitas = $request->visibilitas;
+    
         if ($request->hasFile('template_surat')) {
-            $data['template_surat'] = $request->file('template_surat')->store('templatesurat', 'public');
-        }
-
-        Formulir::create($data);
-
-
-         // Tambahkan logika untuk simpan format surat jika tersedia
-        if ($request->has('format_surats')) {
-            foreach ($request->format_surats as $format) {
-                FormatSurat::create([
-                    'id' => Str::uuid(),
-                  //  'id_formulir' => $formulir->id,
-                    'urutan' => $format['urutan'],
-                    'text_masukan' => $format['text_masukan'],
-                    'jenis_masukan' => $format['jenis_masukan'],
-                    'keterangan' => $format['keterangan'] ?? null,
-                ]);
+            if ($formulir->template_surat && Storage::disk('public')->exists($formulir->template_surat)) {
+                Storage::disk('public')->delete($formulir->template_surat);
             }
+            $formulir->template_surat = $request->file('template_surat')->store('templatesurat', 'public');
         }
-
-
-        return redirect()->back()->with('success', 'Formulir surat berhasil ditambahkan.');
+    
+        $formulir->save();
+    
+        return redirect()->route('formulirsurat')->with('success', 'Formulir berhasil diperbarui.');
     }
+    
 }
