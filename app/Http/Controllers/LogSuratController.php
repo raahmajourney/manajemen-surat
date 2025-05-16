@@ -46,12 +46,8 @@ class LogSuratController extends Controller
                 'diupdate_oleh' => Auth::id(),
             ]);
 
-            // Catat log aktivitas surat
-            LogSurat::create([
-                'id_surat' => $surat->id,
-                'id_user' => Auth::id(),
-                'aktivitas' => 'Membuat surat',
-            ]);
+         
+                
 
             return redirect()->back()->with('success', 'Surat dan log berhasil dibuat.');
         } catch (Exception $e) {

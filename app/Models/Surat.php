@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Surat extends Model
 {
@@ -50,6 +51,40 @@ class Surat extends Model
     public function logSurats()
     {
         return $this->hasMany(LogSurat::class, 'id_surat');
+    }
+
+     protected static function booted()
+    {
+        static::created(function ($surat) {
+            if (Auth::check()) {
+                LogSurat::create([
+                    'id_surat' => $surat->id,
+                    'id_user' => Auth::id(),
+                    'aktivitas' => 'Membuat surat',
+                ]);
+            }
+        });
+
+        static::updated(function ($surat) {
+            if (Auth::check()) {
+                LogSurat::create([
+                    'id_surat' => $surat->id,
+                    'id_user' => Auth::id(),
+                    'aktivitas' => 'Mengedit surat',
+                ]);
+            }
+        });
+
+        
+    static::deleting(function ($surat) {
+        if (Auth::check()) {
+            LogSurat::create([
+                'id_surat' => $surat->id,
+                'id_user' => Auth::id(),
+                'aktivitas' => 'Menghapus surat',
+            ]);
+        }
+    });
     }
 
 }

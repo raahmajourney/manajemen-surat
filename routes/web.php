@@ -12,6 +12,8 @@ use App\Http\Controllers\DataFormulirController;
 use App\Http\Controllers\FormulirSuratController;
 use App\Http\Controllers\LogSuratController;
 use App\Http\Controllers\PengaturanController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +25,17 @@ Route::post('login', [AuthController::class,'loginProses'])->name('loginProses')
 
 Route::get('register', [AuthController::class,'register'])->name('register');
 Route::post('register', [AuthController::class,'registerProses'])->name('registerProses');
+
+// Menampilkan form lupa password
+Route::get('forgotpassword', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+// Mengirim email reset password
+Route::post('forgotpassword', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Menampilkan form reset password (dari link email)
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Proses reset password
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
 
 
 
@@ -77,4 +90,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('formulirsurat/{id}', [DataFormulirController::class, 'update'])->name('formulir.update');
 
     Route::get('logsurat', [LogSuratController::class, 'index'])->name('logsurat.index');
+
+    
 });
