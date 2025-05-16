@@ -7,6 +7,7 @@ use App\Models\JenisSurat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class SuratKeluarController extends Controller
 {
@@ -80,13 +81,10 @@ class SuratKeluarController extends Controller
         'tanggal_surat' => $validated['tanggal_surat'],
         'status' => $validated['status'],
         'file_surat' => $filePath,
+        'dibuat_oleh' => Auth::id(),
+        'diupdate_oleh' => Auth::id(),
 
-        //'dibuat_oleh' => Auth::id(),
-        //'diupdate_oleh' => Auth::id(),
-
-            // SEMENTARA tidak pakai Auth
-        'dibuat_oleh' => 1, // ganti dengan ID user default (atau buat dummy user dengan ID 1)
-        'diupdate_oleh' => null,
+        
     ]);
 
     return redirect()->route('suratkeluar')->with('success', 'Surat berhasil ditambahkan.');
@@ -115,7 +113,7 @@ class SuratKeluarController extends Controller
             'nama_pengirim' => 'required|string',
             'tanggal_surat' => 'required|date',
             'status' => 'required|in:aktif,arsip',
-            'file_surat' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'file_surat' => 'nullable|file|mimes:pdf|max:2048',
         ]);
 
         $filePath = $surat->file_surat;
@@ -132,6 +130,7 @@ class SuratKeluarController extends Controller
             'tanggal_surat' => $validated['tanggal_surat'],
             'status' => $validated['status'],
             'file_surat' => $filePath,
+            'diupdate_oleh' => Auth::id(),
         ]);
 
         return redirect()->route('suratkeluar')->with('success', 'Surat berhasil diperbarui.');

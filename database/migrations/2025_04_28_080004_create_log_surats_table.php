@@ -10,7 +10,7 @@ class CreateLogSuratsTable extends Migration
     {
         Schema::create('log_surats', function (Blueprint $table) {
             $table->id();
-            $table->uuid('id_surat');
+            $table->uuid('id_surat')->index();
             $table->foreignId('id_user')->constrained('users');
             $table->string('aktivitas');
             $table->timestamps();

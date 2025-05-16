@@ -32,4 +32,24 @@ class Surat extends Model
          return $this->hasMany(Disposisi::class, 'id_surat');
      }
 
+       // 🔗 Relasi ke user yang membuat surat
+    public function pembuat()
+    {
+        return $this->belongsTo(User::class, 'dibuat_oleh');
+    }
+
+    // 🔗 Relasi ke user yang mengupdate surat
+    public function pengupdate()
+    {
+        return $this->belongsTo(User::class, 'diupdate_oleh');
+    }
+
+
+
+    // log surat
+    public function logSurats()
+    {
+        return $this->hasMany(LogSurat::class, 'id_surat');
+    }
+
 }

@@ -68,7 +68,7 @@ class UnitkerjaController extends Controller
 
         if ($unit->surats()->exists() || $unit->disposisis()->exists()) {
             return redirect()->route('unitkerja')
-                ->with('error', 'Unit Kerja tidak dapat dihapus karena telah memiliki Disposisi.');
+                ->with('error', 'Unit Kerja ini tidak dapat dihapus karena telah memiliki Disposisi.');
         }
 
         $unit->delete();

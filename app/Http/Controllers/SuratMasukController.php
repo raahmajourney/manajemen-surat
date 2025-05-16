@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class SuratMasukController extends Controller
 {
+
+    
     public function index(Request $request) {
 
 
@@ -52,7 +54,7 @@ class SuratMasukController extends Controller
     // menampilkan detail surat masuk
     public function show($id)
     {
-        $surat = Surat::with('jenisSurat')->findOrFail($id);
+        $surat = Surat::with('jenisSurat','pembuat')->findOrFail($id);
 
         $data = [
             'title' => 'Detail Surat Masuk',
@@ -95,13 +97,9 @@ class SuratMasukController extends Controller
         'tanggal_surat' => $validated['tanggal_surat'],
         'status' => $validated['status'],
         'file_surat' => $filePath,
+        'dibuat_oleh' => Auth::id(),
+        'diupdate_oleh' => Auth::id(),
 
-        //'dibuat_oleh' => Auth::id(),
-        //'diupdate_oleh' => Auth::id(),
-
-            // SEMENTARA tidak pakai Auth
-        'dibuat_oleh' => 1, // ganti dengan ID user default (atau buat dummy user dengan ID 1)
-        'diupdate_oleh' => null,
     ]);
 
     return redirect()->route('suratmasuk')->with('success', 'Surat berhasil ditambahkan.');
@@ -147,6 +145,7 @@ class SuratMasukController extends Controller
         'tanggal_surat' => $validated['tanggal_surat'],
         'status' => $validated['status'],
         'file_surat' => $filePath,
+        'diupdate_oleh' => Auth::id(),
     ]);
 
     return redirect()->route('suratmasuk')->with('success', 'Surat berhasil diperbarui.');

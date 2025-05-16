@@ -25,51 +25,80 @@
 <body class="bg-gradient-primary">
 
     <div class="container col-xl-6 col-lg-6 col-md-9">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">M Surat UMP | Register</h1>
+                        </div>
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0 ">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                   
-                    <div class="col-lg-12">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">M Surat UMP | Buat Akun</h1>
+                        {{-- Tampilkan pesan sukses --}}
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
                             </div>
-                            <form class="user">
-                                <div class="form-group row">
-                                    <div class="col-sm-12 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="First Name">
-                                    </div>
-                                    
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Email Address">
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-12 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user"
-                                            id="exampleInputPassword" placeholder="Password">
-                                    </div>
-                                
-                                </div>
-                                <button type="submit" href="#" class="btn btn-primary btn-user btn-block">
-                                    Register
-                                </button>
-                                <hr>
-                            </form>
-                            <div class="text-center">
-                                <a class="small" href="{{ route('login') }}">Sudah Punya Akun? Login!</a>
+                        @endif
+
+                        {{-- Tampilkan error umum --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                Silakan periksa kembali form Anda.
                             </div>
+                        @endif
+
+                        <form class="user" method="POST" action="{{ route('registerProses') }}">
+                            @csrf
+
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control form-control-user @error('name') is-invalid @enderror"
+                                       placeholder="Nama" value="{{ old('name') }}">
+                                @error('name')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control form-control-user @error('email') is-invalid @enderror"
+                                       placeholder="Email" value="{{ old('email') }}">
+                                @error('email')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
+                           <div class="form-group">
+                            <div class="input-group">
+                                <input type="password" class="form-control form-control-user @error('password') is-invalid @enderror"
+                                    id="password" placeholder="Masukkan Password" name="password">
+                                <div class="input-group-append">
+                                    <button class="btn btn-light border toggle-password" type="button">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+
+                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                Register
+                            </button>
+                        </form>
+
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" href="{{ route('login') }}">Sudah Punya Akun? Login!</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+</div>
 
    <!-- Bootstrap core JavaScript-->
    <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
@@ -81,6 +110,30 @@
    <!-- Custom scripts for all pages-->
    <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
 
+
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButtons = document.querySelectorAll('.toggle-password');
+
+        toggleButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                const input = this.closest('.input-group').querySelector('input');
+                const icon = this.querySelector('i');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 

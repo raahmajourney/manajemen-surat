@@ -36,6 +36,11 @@
                 </td>
             </tr>
             <tr>
+                <th>Dibuat Oleh</th>
+                <td>{{ $surat->pembuat->name ?? '-' }}</td>
+            </tr>
+
+            <tr>
                 <th>Isi Surat</th>
                 <td>{{ $surat->isi }}</td>
             </tr>
