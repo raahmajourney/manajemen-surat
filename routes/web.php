@@ -14,6 +14,7 @@ use App\Http\Controllers\LogSuratController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +36,15 @@ Route::get('reset-password/{token}', [ResetPasswordController::class, 'showReset
 
 // Proses reset password
 Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('/test-email', function () {
+    Mail::raw('Ini adalah email percobaan dari Laravel', function ($message) {
+        $message->to('test@example.com') // Alamat bebas, Mailtrap akan tangkap
+                ->subject('Tes Kirim Email');
+    });
+
+    return 'Email percobaan sudah dikirim';
+});
 
 
 

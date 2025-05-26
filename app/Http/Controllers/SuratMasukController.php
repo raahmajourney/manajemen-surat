@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Surat;
 use App\Models\JenisSurat;
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -111,8 +112,9 @@ class SuratMasukController extends Controller
     {
         $surat = Surat::findOrFail($id);
         $jenisSurats = JenisSurat::all();
+         $unitKerjas = UnitKerja::all();
 
-        return view('suratmasuk.edit', compact('surat', 'jenisSurats'));
+        return view('suratmasuk.edit', compact('surat', 'jenisSurats', 'unitKerjas'));
     }
 
 
@@ -157,9 +159,9 @@ public function destroy($id)
 {
     $surat = Surat::findOrFail($id);
     
-    
+    // Hapus file jika ada
     if ($surat->file_surat) {
-        Storage::delete('public/' . $surat->file_surat);
+        Storage::disk('public')->delete($surat->file_surat);
     }
 
     $surat->delete();

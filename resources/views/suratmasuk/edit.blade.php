@@ -2,7 +2,13 @@
 
 @section('content')
 <h1 class="h3 mb-4 text-gray-800">Edit Surat</h1>
+
+
 <div class="container">
+    <!-- Tombol Tambah Disposisi -->
+<button type="button" class="btn btn-success mt-3 mb-3" data-toggle="modal" data-target="#modalTambahDisposisi">
+  Tambahkan Disposisi
+</button>
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
@@ -73,7 +79,59 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Update Surat</button>
+        
         <a href="{{ route('suratmasuk') }}" class="btn btn-secondary">Kembali</a>
+
     </form>
 </div>
+
+
+<!-- Modal Tambah Disposisi -->
+<div class="modal fade" id="modalTambahDisposisi" tabindex="-1" role="dialog" aria-labelledby="modalTambahDisposisiLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTambahDisposisiLabel">Form Tambah Disposisi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Tutup">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="{{ route('disposisi.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="modal-body">
+
+          {{-- Hidden input agar id_surat langsung dibawa --}}
+          <input type="hidden" name="id_surat" value="{{ $surat->id }}">
+
+          <div class="form-group">
+            <label for="catatan_disposisi">Catatan Disposisi</label>
+            <textarea class="form-control" id="catatan_disposisi" name="catatan_disposisi" rows="3" placeholder="Masukkan catatan disposisi..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="id_unit_kerja">Unit Kerja Tujuan</label>
+            <select class="form-control" id="id_unit_kerja" name="id_unit_kerja">
+              <option value="">-- Pilih Unit Kerja --</option>
+             @foreach ($unitKerjas as $unit)  
+              <option value="{{ $unit->id }}">{{ $unit->nama_unit_kerja }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="file_disposisi">Upload File Bukti Disposisi</label>
+            <input type="file" class="form-control-file" id="file_disposisi" name="file_disposisi">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 @endsection

@@ -63,7 +63,6 @@
 <!-- Konten Utama -->
 <div class="container-fluid mt-4">
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
-    <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambahDisposisi">+ Tambah Disposisi</a>
 
     <div class="d-flex flex-column flex-md-row align-items-center">
       <label for="tampilkan" class="mr-2 mb-2 mb-md-0">Tampilkan</label>
