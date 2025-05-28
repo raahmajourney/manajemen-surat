@@ -105,26 +105,9 @@
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
     <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambahSurat">+ Tambah Surat</a>
     
-    <div class="d-flex flex-column flex-md-row align-items-center">
-      <label for="tampilkan" class="mr-2 mb-2 mb-md-0">Tampilkan</label>
-      <select id="tampilkan" class="form-control w-auto mr-3 mb-2 mb-md-0">
-        <option selected>10</option>
-        <option>25</option>
-        <option>50</option>
-      </select> 
-      
-      <form method="GET" action="{{ route('suratkeluar') }}" class="form-inline">
-        <label for="search" class="mr-2">Cari:</label>
-        <input type="text" name="search" id="search" class="form-control mr-2" value="{{ request('search') }}" placeholder="Cari surat...">
-        <button type="submit" class="btn btn-primary">Cari</button>
-      </form>
-      
-    </div>
+    <div class="d-flex flex-column flex-md-row align-items-center"></div>
   </div>
-
-  @if($surats->isEmpty())
-  <div class="alert alert-warning">Tidak ada data surat ditemukan.</div>
-@endif
+  
   <div class="table-responsive">
     <table class="table table-bordered table-hover">
       <thead class="thead-light">

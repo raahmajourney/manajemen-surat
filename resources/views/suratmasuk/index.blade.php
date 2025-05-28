@@ -105,162 +105,81 @@
     <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambahSurat">+ Tambah Surat</a>
     
     <div class="d-flex flex-column flex-md-row align-items-center">
-      <label for="tampilkan" class="mr-2 mb-2 mb-md-0">Tampilkan</label>
-      <select id="tampilkan" class="form-control w-auto mr-3 mb-2 mb-md-0">
-        <option selected>10</option>
-        <option>25</option>
-        <option>50</option>
-      </select> 
-      
-      <form method="GET" action="{{ route('suratmasuk') }}" class="form-inline">
-        <label for="search" class="mr-2">Cari:</label>
-        <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control mr-2" placeholder="Cari surat...">
-        <button type="submit" class="btn btn-primary">Cari</button>
-      </form>
-      
-
     </div>
   </div>
-
-  @if($surats->isEmpty())
-  <div class="alert alert-warning">Tidak ada data surat ditemukan.</div>
-@endif
-
-
   <div class="table-responsive">
-    <table class="table table-bordered table-hover">
-      <thead class="thead-light">
+   <table class="table table-bordered table-hover" id="datatable">
+    <thead class="thead-light">
         <tr>
-          <th>No</th>
-          <th>Nomor Surat</th>
-          <th>Judul</th>
-          <th>Jenis Surat</th>
-          <th>Nama Pengirim</th>
-          <th>Tanggal Surat</th>
-          <th>Status</th>
-          <th>File</th>
-          <th>Aksi</th>
+            <th>No</th>
+            <th>Nomor Surat</th>
+            <th>Judul</th>
+            <th>Jenis Surat</th>
+            <th>Nama Pengirim</th>
+            <th>Tanggal Surat</th>
+            <th>Status</th>
+            <th>File</th>
+            <th>Aksi</th>
         </tr>
-      </thead>
-      <tbody>
-        @foreach($surats as $no => $surat)
-        <tr onclick="window.location='{{ route('suratmasuk.show', $surat->id) }}';" style="cursor: pointer;">
-          <td>{{ $no + 1 }}</td>
-          <td>{{ $surat->nomor_surat }}</td>
-          <td>{{ $surat->judul }}</td>
-          <td>{{ $surat->jenisSurat->nama_jenis_surat ?? '-' }}</td>
-          <td>{{ $surat->nama_pengirim }}</td>
-          <td>{{ $surat->tanggal_surat }}</td>
-          <td>
-            <span class="badge badge-{{ $surat->status == 'aktif' ? 'success' : 'secondary' }}">
-              {{ ucfirst($surat->status) }}
-            </span>
-          </td>
-          <td>
-            @if($surat->file_surat)
-              <a href="{{ asset('storage/' . $surat->file_surat) }}" target="_blank" class="btn btn-sm btn-info" onclick="event.stopPropagation();">Lihat File</a>
-            @else
-              -
-            @endif
-          </td>
+    </thead>
+</table>
 
-          <td>
-            <div class="d-flex flex-column flex-md-row">
-                <a href="{{ route('suratmasuk.edit', $surat->id) }}" class="btn btn-sm  mr-md-2 mb-2 mb-md-0" onclick="event.stopPropagation();">
-                  <img src="{{ asset('img/edit.png') }}" alt="Edit" width="20" height="20">
-                </a>
-                
-                <form action="{{ route('suratmasuk.destroy', $surat->id) }}" method="POST" class="form-delete" onclick="event.stopPropagation();">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-sm">
-                    <img src="{{ asset('img/delete.png') }}" alt="Hapus" width="20" height="20">
-                  </button>
-              </form>
-
-              <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    document.querySelectorAll('.form-delete').forEach(form => {
-                        form.addEventListener('submit', function (e) {
-                            e.preventDefault();
-                            Swal.fire({
-                                title: 'Apakah Anda yakin?',
-                                text: "Data akan dihapus secara permanen!",
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#d33',
-                                cancelButtonColor: '#3085d6',
-                                confirmButtonText: 'Ya, hapus!',
-                                cancelButtonText: 'Batal'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    form.submit();
-                                }
-                            });
-                        });
-                    });
-                });
-                </script>
-                
-              
-            </div>
-        </td>
-        
-
-
-        </tr>
-        @endforeach
-      </tbody>
-      
-    </table>
   </div>
-
- 
-  <div class="d-flex justify-content-between align-items-center mt-3">
-    <div>
-        Menampilkan {{ $surats->firstItem() }} sampai {{ $surats->lastItem() }} dari total {{ $surats->total() }} data
-    </div>
-    <div>
-        {{ $surats->appends(request()->query())->links() }}
-    </div>
 </div>
-
-</div>
-
 @endsection
 
-@if ($errors->any())
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('suratmasuk.data') }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'nomor_surat', name: 'nomor_surat' },
+            { data: 'judul', name: 'judul' },
+            { data: 'jenis_surat', name: 'jenisSurat.nama_jenis_surat' },
+            { data: 'nama_pengirim', name: 'nama_pengirim' },
+            { data: 'tanggal_surat', name: 'tanggal_surat' },
+            { data: 'status', name: 'status' },
+            { data: 'file', name: 'file', orderable: false, searchable: false },
+            { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
+        ]
+    });
+});
+</script>
+
+@if (session('success'))
 <script>
     $(document).ready(function () {
-        $('#modalTambahSurat').modal('show');
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
     });
 </script>
 @endif
 
+@if (session('error'))
+<script>
+    $(document).ready(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: '{{ session('error') }}',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    });
+</script>
+@endif
 
-  @if (session('success'))
-  <script>
-      Swal.fire({
-          icon: 'success',
-          title: 'Berhasil',
-          text: '{{ session('success') }}',
-          showConfirmButton: false,
-          timer: 2000
-      });
-  </script>
-  @endif
-
-  @if (session('error'))
-  <script>
-      Swal.fire({
-          icon: 'error',
-          title: 'Gagal',
-          text: '{{ session('error') }}',
-          showConfirmButton: false,
-          timer: 3000
-      });
-  </script>
-  @endif
+@endpush
 
 
 

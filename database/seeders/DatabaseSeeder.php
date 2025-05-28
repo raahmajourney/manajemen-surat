@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             JenisSuratsTableSeeder::class,
             UnitKerjaSeeder::class,
+             UserRoleSeeder::class,
         ]);
             
         // Membuat role admin dan user

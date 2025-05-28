@@ -22,6 +22,9 @@
     <!-- SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+
 </head>
 
 <body id="page-top">
@@ -52,6 +55,7 @@
    
 
             <!-- Nav Item - Charts -->
+            @canany(['buat surat', 'edit surat', 'lihat surat'])
             <li class="nav-item {{ $menusurat ?? '' }}">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
@@ -65,6 +69,7 @@
                         </div>
                     </div>
             </li>
+            @endcanany
 
             <!-- Nav Item - Tables -->
             <li class="nav-item {{ $menudisposisi ?? '' }}" >
@@ -245,8 +250,6 @@
         </div>
     </div>
 
-    
-
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -260,12 +263,12 @@
         <!-- SweetAlert2 JS -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
-        
 
+    @stack('scripts')    
 </body>
     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
         @csrf
     </form>
-
 </html>
