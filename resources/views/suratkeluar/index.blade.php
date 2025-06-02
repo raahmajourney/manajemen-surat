@@ -109,7 +109,7 @@
   </div>
   
   <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="datatable">
       <thead class="thead-light">
         <tr>
           <th>No</th>
@@ -182,4 +182,56 @@
     });
 </script>
 @endif
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('suratkeluar.data') }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'nomor_surat', name: 'nomor_surat' },
+            { data: 'judul', name: 'judul' },
+            { data: 'jenis_surat', name: 'jenisSurat.nama_jenis_surat' },
+            { data: 'nama_pengirim', name: 'nama_pengirim' },
+            { data: 'tanggal_surat', name: 'tanggal_surat' },
+            { data: 'status', name: 'status' },
+            { data: 'file', name: 'file', orderable: false, searchable: false },
+            { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
+        ]
+    });
+});
+</script>
+
+@if (session('success'))
+<script>
+    $(document).ready(function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    $(document).ready(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: '{{ session('error') }}',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    });
+</script>
+@endif
+
+@endpush
 

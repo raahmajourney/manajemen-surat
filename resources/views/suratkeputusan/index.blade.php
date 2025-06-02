@@ -100,30 +100,12 @@
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
     <a href="#" class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambahSurat">+ Tambah Surat</a>
     
-    <div class="d-flex flex-column flex-md-row align-items-center">
-      <label for="tampilkan" class="mr-2 mb-2 mb-md-0">Tampilkan</label>
-      <select id="tampilkan" class="form-control w-auto mr-3 mb-2 mb-md-0">
-        <option selected>10</option>
-        <option>25</option>
-        <option>50</option>
-      </select> 
-      
-      <form method="GET" action="{{ route('suratkeputusan') }}" class="form-inline">
-        <label for="search" class="mr-2">Cari:</label>
-        <input type="text" name="search" id="search" class="form-control mr-2"
-               value="{{ request('search') }}" placeholder="Cari surat...">
-        <button type="submit" class="btn btn-primary">Cari</button>
-    </form>
-    
-
+    <div class="d-flex flex-column flex-md-row align-items-center"> 
     </div>
   </div>
 
-  @if($surats->isEmpty())
-  <div class="alert alert-warning">Tidak ada data surat ditemukan.</div>
-  @endif
   <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="datatable">
       <thead class="thead-light">
         <tr>
           <th>No</th>
@@ -183,17 +165,6 @@
       
     </table>
   </div>
-
-  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-    <span class="mb-2 mb-md-0">Menampilkan 1 ke 1 dari 1 data</span>
-    <nav>
-      <ul class="pagination mb-0">
-        <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
-      </ul>
-    </nav>
-  </div>
 </div>
 
 @endsection
@@ -206,3 +177,54 @@
 </script>
 @endif
 
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('suratkeputusan.data') }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'nomor_surat', name: 'nomor_surat' },
+            { data: 'judul', name: 'judul' },
+            { data: 'jenis_surat', name: 'jenisSurat.nama_jenis_surat' },
+            { data: 'nama_pengirim', name: 'nama_pengirim' },
+            { data: 'tanggal_surat', name: 'tanggal_surat' },
+            { data: 'status', name: 'status' },
+            { data: 'file', name: 'file', orderable: false, searchable: false },
+            { data: 'aksi', name: 'aksi', orderable: false, searchable: false }
+        ]
+    });
+});
+</script>
+
+@if (session('success'))
+<script>
+    $(document).ready(function () {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    $(document).ready(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: '{{ session('error') }}',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    });
+</script>
+@endif
+
+@endpush

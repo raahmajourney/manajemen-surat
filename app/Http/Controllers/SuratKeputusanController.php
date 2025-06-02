@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
+
 
 class SuratKeputusanController extends Controller
 {
@@ -35,6 +37,47 @@ class SuratKeputusanController extends Controller
 
     return view('suratkeputusan.index', $data);
     }
+
+
+    //-datatable--///
+    public function getData(Request $request)
+{
+    $data = Surat::with('jenisSurat')
+        ->where('id_jenis_surat', 3)
+        ->orderBy('created_at', 'desc');
+
+    return DataTables::of($data)
+        ->addIndexColumn()
+        ->addColumn('jenis_surat', fn ($row) => $row->jenisSurat->nama_jenis_surat ?? '-')
+        ->addColumn('status', function ($row) {
+    $color = match($row->status) {
+        'aktif' => 'success',
+        'arsip' => 'secondary',
+        default => 'dark',
+    };
+
+    return '<span class="badge badge-' . $color . '">' . ucfirst($row->status) . '</span>';
+})
+        ->addColumn('file', function ($row) {
+            return $row->file_surat
+                ? '<a href="'.asset("storage/{$row->file_surat}").'" target="_blank" class="btn btn-sm btn-info">Lihat File</a>'
+                : '-';
+        })
+        ->addColumn('aksi', function ($row) {
+            $edit = route('suratkeputusan.edit', $row->id);
+            $delete = route('suratkeputusan.destroy', $row->id);
+             $routePrefix = 'suratkeputusan';
+
+            return view('components.aksi', [
+            'edit' => $edit,
+            'delete' => $delete,
+            'model' => $row,
+            'routePrefix' => $routePrefix
+        ])->render();
+        })
+        ->rawColumns(['file', 'status', 'aksi'])
+        ->make(true);
+}
 
     public function show($id)
     {

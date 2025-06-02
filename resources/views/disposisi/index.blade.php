@@ -64,21 +64,12 @@
 <div class="container-fluid mt-4">
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
 
-    <div class="d-flex flex-column flex-md-row align-items-center">
-      <label for="tampilkan" class="mr-2 mb-2 mb-md-0">Tampilkan</label>
-      <select id="tampilkan" class="form-control w-auto mr-3 mb-2 mb-md-0">
-        <option selected>10</option>
-        <option>25</option>
-        <option>50</option>
-      </select> 
-
-      <label for="search" class="mr-2 mb-2 mb-md-0">Cari:</label>
-      <input type="text" id="search" class="form-control w-auto">
+    <div class="d-flex flex-column flex-md-row align-items-center"> 
     </div>
   </div>
 
   <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="datatable">
       <thead class="thead-light">
         <tr>
           <th>No</th>
@@ -158,15 +149,29 @@
   </div>
 
   <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-    <span class="mb-2 mb-md-0">Menampilkan 1 ke 1 dari 1 data</span>
-    <nav>
-      <ul class="pagination mb-0">
-        <li class="page-item disabled"><a class="page-link" href="#">Sebelumnya</a></li>
-        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">Selanjutnya</a></li>
-      </ul>
-    </nav>
   </div>
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('#datatable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('disposisi.data') }}",
+        columns: [
+            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+            { data: 'nomor_surat', name: 'surat.nomor_surat' },
+            { data: 'judul', name: 'surat.judul' },
+            { data: 'catatan_disposisi', name: 'catatan_disposisi' },
+            { data: 'unit_kerja', name: 'unitKerja.nama_unit_kerja' },
+            { data: 'file', name: 'file', orderable: false, searchable: false },
+            { data: 'aksi', name: 'aksi', orderable: false, searchable: false },
+        ]
+    });
+});
+</script>
+
+@endpush

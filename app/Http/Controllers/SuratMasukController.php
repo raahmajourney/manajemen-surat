@@ -81,8 +81,14 @@ public function getData(Request $request)
         ->addColumn('aksi', function ($row) {
             $edit = route('suratmasuk.edit', $row->id);
             $delete = route('suratmasuk.destroy', $row->id);
+            $routePrefix = 'suratmasuk';
 
-            return view('components.aksi', compact('edit', 'delete', 'row'))->render();
+             return view('components.aksi', [
+            'edit' => $edit,
+            'delete' => $delete,
+            'model' => $row,
+            'routePrefix' => $routePrefix
+    ])->render();
         })
         ->rawColumns(['file', 'status', 'aksi'])
         ->make(true);

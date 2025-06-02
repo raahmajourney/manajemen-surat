@@ -44,17 +44,19 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
+            @role('admin|staf')
             <li class="nav-item {{ $menuDashboard ?? '' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
+            @endrole
             <!-- Divider -->
             <hr class="sidebar-divider">
    
 
             <!-- Nav Item - Charts -->
+            @role('admin|staf')
             @canany(['buat surat', 'edit surat', 'lihat surat'])
             <li class="nav-item {{ $menusurat ?? '' }}">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
@@ -70,15 +72,20 @@
                     </div>
             </li>
             @endcanany
+            @endrole
 
             <!-- Nav Item - Tables -->
+            @role('admin|staf')
             <li class="nav-item {{ $menudisposisi ?? '' }}" >
                 <a class="nav-link" href="{{ route('disposisi.index') }}">
                     <i class="fas fa-fw fa-paper-plane"></i>
                     <span>Disposisi</span></a>
             </li>
+            @endrole
+
 
             <!-- Divider -->
+            @role('dosen|admin|staf')
             <hr class="sidebar-divider d-none d-md-block">
             <li class="nav-item {{ $menuformulir ?? '' }}">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseFormulir"
@@ -93,25 +100,29 @@
                     </div>
                 </div>
             </li>
-            
+            @endrole
             
 
                    
              <!-- Nav Item - Pages Collapse Menu -->
-                         <li class="nav-item {{ $menuunitkerja ?? '' }}">
-                            <a class="nav-link" href="{{ route('unitkerja') }}" >
-                                <i class="fas fa-user fa-fw "></i>
-                                <span>Unit Kerja</span>
-                            </a>
-                        </li>
+            @role('admin')
+            <li class="nav-item {{ $menuunitkerja ?? '' }}">
+                <a class="nav-link" href="{{ route('unitkerja') }}" >
+                    <i class="fas fa-user fa-fw "></i>
+                    <span>Unit Kerja</span>
+                </a>
+            </li>
+            @endrole
 
-                        <!-- Nav Item - Pages Collapse Menu -->
-                        <li class="nav-item {{ $menuLogSurat ?? '' }}">
-                            <a class="nav-link" href="{{ route('logsurat.index') }}" >
-                                <i class="fas fa-file-alt fa-fw "></i>
-                                <span>Log Surat</span>
-                            </a>
-                        </li>
+            <!-- Nav Item - Pages Collapse Menu -->
+            @role('admin|staf')
+            <li class="nav-item {{ $menuLogSurat ?? '' }}">
+                <a class="nav-link" href="{{ route('logsurat.index') }}" >
+                    <i class="fas fa-file-alt fa-fw "></i>
+                    <span>Log Surat</span>
+                </a>
+            </li>
+            @endrole
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
