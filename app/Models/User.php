@@ -28,6 +28,7 @@ class User extends Authenticatable implements CanResetPasswordContract
         'name',
         'email',
         'password',
+        'unit_kerja_id',
     ];
 
     /**
@@ -52,4 +53,10 @@ class User extends Authenticatable implements CanResetPasswordContract
             'password' => 'hashed',
         ];
     }
+
+    public function unitKerja()
+    {
+        return $this->belongsTo(UnitKerja::class, 'unit_kerja_id');
+    }
+
 }

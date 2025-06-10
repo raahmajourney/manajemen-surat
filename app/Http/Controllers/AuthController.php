@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
+
 class AuthController extends Controller
 {
     public function login(){
@@ -32,15 +33,20 @@ class AuthController extends Controller
 
              $credentials = $request->only('email', 'password');
 
-            if (Auth::attempt($credentials)) {
+          if (Auth::attempt($credentials)) {
                 $request->session()->regenerate();
 
                 if (Auth::user()->hasRole('admin')) {
                     return redirect()->route('dashboard');
+                } elseif (Auth::user()->hasRole('dosen')) {
+                    return redirect()->route('formulirsurat'); // Ubah ini sesuai nama rute formulir surat
+                } elseif (Auth::user()->hasRole('staf')) {
+                    return redirect()->route('dashboard'); // Opsional
                 } else {
-                    return redirect()->route('dashboard');
+                    return redirect()->route('dashboard'); // fallback
                 }
             }
+
 
         return back()->withErrors(['email' => 'Email atau password salah.'])->withInput();
     }

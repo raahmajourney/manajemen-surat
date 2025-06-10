@@ -14,12 +14,15 @@ class CreateSuratsTable extends Migration
             $table->string('judul');
             $table->text('isi');
             $table->foreignId('id_jenis_surat')->constrained('jenis_surats');
+
+            // ✅ Tambahkan kolom unit_kerja_id
+            $table->foreignId('unit_kerja_id')->nullable()->constrained('unit_kerja')->nullOnDelete();
+
             $table->string('nama_pengirim');
             $table->date('tanggal_surat');
             $table->string('status');
 
-           // $table->foreignId('dibuat_oleh')->constrained('users');
-           // $table->foreignId('diupdate_oleh')->nullable()->constrained('users');
+          
 
            $table->foreignId('dibuat_oleh')->nullable()->constrained('users');
            $table->foreignId('diupdate_oleh')->nullable()->constrained('users');

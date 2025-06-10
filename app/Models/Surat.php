@@ -87,4 +87,10 @@ class Surat extends Model
     });
     }
 
+    public function unitKerja()
+    {
+        return $this->belongsTo(UnitKerja::class, 'unit_kerja_id');
+    }
+
+
 }

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Surat;
 use App\Models\JenisSurat;
 use App\Models\UnitKerja;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -22,10 +23,13 @@ class SuratMasukController extends Controller
 
         $title = "Surat Masuk";
         $search = $request->input('search');
+
+        $userUnitKerjaId = Auth::user()->unit_kerja_id;
     
         // Query dasar: hanya surat masuk
         $query = Surat::with('jenisSurat')
-            ->where('id_jenis_surat', 1);
+            ->where('id_jenis_surat', 1)
+             ->where('unit_kerja_id', $userUnitKerjaId); // ✅ Filter berdasarkan unit kerja
     
         // Tambahkan filter pencarian jika ada input search
         if (!empty($search)) {
@@ -57,8 +61,11 @@ class SuratMasukController extends Controller
 
 public function getData(Request $request)
 {
+    $userUnitKerjaId = Auth::user()->unit_kerja_id;
+
     $data = Surat::with('jenisSurat')
         ->where('id_jenis_surat', 1)
+         ->where('unit_kerja_id', $userUnitKerjaId) // ✅ Filter juga di datatable
         ->orderBy('created_at', 'desc');
 
     return DataTables::of($data)
@@ -119,6 +126,7 @@ public function getData(Request $request)
         'judul' => 'required|string',
         'isi' => 'required|string',
         'id_jenis_surat' => 'required|integer',
+         'unit_kerja_id' => Auth::user()->unit_kerja_id,
         'nama_pengirim' => 'required|string',
         'tanggal_surat' => 'required|date',
         'status' => 'required|in:aktif,arsip',

@@ -23,6 +23,7 @@
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    
 
 
 </head>
@@ -50,14 +51,14 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            @endrole
             <!-- Divider -->
             <hr class="sidebar-divider">
+            @endrole
    
 
             <!-- Nav Item - Charts -->
             @role('admin|staf')
-            @canany(['buat surat', 'edit surat', 'lihat surat'])
+           
             <li class="nav-item {{ $menusurat ?? '' }}">
                 <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
@@ -71,7 +72,6 @@
                         </div>
                     </div>
             </li>
-            @endcanany
             @endrole
 
             <!-- Nav Item - Tables -->
@@ -108,11 +108,22 @@
             @role('admin')
             <li class="nav-item {{ $menuunitkerja ?? '' }}">
                 <a class="nav-link" href="{{ route('unitkerja') }}" >
-                    <i class="fas fa-user fa-fw "></i>
+                    <i class="fas fa-user-friends fa-fw "></i>
                     <span>Unit Kerja</span>
                 </a>
             </li>
             @endrole
+            
+              <!-- Nav Item - Pages Collapse Menu -->
+            @role('admin')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('user.index') }}" >
+                    <i class="fas fa-user fa-fw "></i>
+                    <span>Pengguna</span>
+                </a>
+            </li>
+            @endrole
+
 
             <!-- Nav Item - Pages Collapse Menu -->
             @role('admin|staf')
@@ -225,7 +236,6 @@
                 </div>
             </footer>
             <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 

@@ -12,7 +12,8 @@ class CreateUnitKerjaTable extends Migration
     public function up(): void
     {
         Schema::create('unit_kerja', function (Blueprint $table) {
-            $table->increments('id'); // Primary Key, int, auto increment
+         
+            $table->id(); // Ubah dari increments() ke id() → menghasilkan BIGINT UNSIGNED
             $table->string('nama_unit_kerja');
             $table->string('jenis_unit_kerja');
             $table->integer('parent_unit_kerja')->nullable(); // int, bisa null (FK ke unit_kerja.id)
