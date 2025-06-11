@@ -15,7 +15,7 @@ class Surat extends Model
     protected $fillable = [
         'id', 'nomor_surat', 'judul', 'isi', 'id_jenis_surat',
         'nama_pengirim', 'tanggal_surat', 'status',
-        'file_surat', 'dibuat_oleh', 'diupdate_oleh'
+        'file_surat', 'dibuat_oleh', 'diupdate_oleh', 'unit_kerja_id'
     ];
 
     public $incrementing = false;

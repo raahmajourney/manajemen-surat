@@ -12,17 +12,23 @@ use Exception;
 class LogSuratController extends Controller
 {
     public function index()
-    {
-        $data = [
-            'menuLogSurat' => 'active'
-        ];
+{
+    $unitKerjaId = Auth::user()->unit_kerja_id;
 
-        $logs = LogSurat::with(['user', 'surat'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+    $logs = LogSurat::with(['user', 'surat'])
+        ->whereHas('surat', function ($query) use ($unitKerjaId) {
+            $query->where('unit_kerja_id', $unitKerjaId);
+        })
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        return view('logsurat.index', $data, compact('logs'));
-    }
+    $data = [
+        'menuLogSurat' => 'active',
+        'logs' => $logs,
+    ];
+
+    return view('logsurat.index', $data);
+}
 
     public function storeSurat(Request $request)
     {

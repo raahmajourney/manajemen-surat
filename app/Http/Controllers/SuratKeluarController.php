@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Surat;
 use App\Models\JenisSurat;
+use App\Models\UnitKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -14,9 +15,12 @@ class SuratKeluarController extends Controller
 {
     public function index(Request $request) {
         $search = $request->query('search');
+        $unitKerjaId = Auth::user()->unit_kerja_id;
+
 
         $query = Surat::with('jenisSurat')
             ->where('id_jenis_surat', 2)
+            ->where('unit_kerja_id', $unitKerjaId)
             ->orderBy('created_at', 'desc');
 
         if ($search) {
@@ -45,8 +49,11 @@ class SuratKeluarController extends Controller
     //-datatable--///
     public function getData(Request $request)
 {
+    $unitKerjaId = Auth::user()->unit_kerja_id;
+
     $data = Surat::with('jenisSurat')
         ->where('id_jenis_surat', 2)
+        ->where('unit_kerja_id', $unitKerjaId)
         ->orderBy('created_at', 'desc');
 
     return DataTables::of($data)
@@ -123,6 +130,7 @@ class SuratKeluarController extends Controller
         'tanggal_surat' => $validated['tanggal_surat'],
         'status' => $validated['status'],
         'file_surat' => $filePath,
+        'unit_kerja_id' => Auth::user()->unit_kerja_id,
         'dibuat_oleh' => Auth::id(),
         'diupdate_oleh' => Auth::id(),
 

@@ -126,7 +126,6 @@ public function getData(Request $request)
         'judul' => 'required|string',
         'isi' => 'required|string',
         'id_jenis_surat' => 'required|integer',
-         'unit_kerja_id' => Auth::user()->unit_kerja_id,
         'nama_pengirim' => 'required|string',
         'tanggal_surat' => 'required|date',
         'status' => 'required|in:aktif,arsip',
@@ -145,6 +144,7 @@ public function getData(Request $request)
         'judul' => $validated['judul'],
         'isi' => $validated['isi'],
         'id_jenis_surat' => $validated['id_jenis_surat'],
+        'unit_kerja_id' => Auth::user()->unit_kerja_id, // ✅ di-set langsung di sini
         'nama_pengirim' => $validated['nama_pengirim'],
         'tanggal_surat' => $validated['tanggal_surat'],
         'status' => $validated['status'],
