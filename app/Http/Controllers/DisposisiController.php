@@ -77,8 +77,8 @@ class DisposisiController extends Controller
             'id_unit_kerja' => $request->id_unit_kerja, // Bisa tetap input manual
             'file_disposisi' => $filePath,
         ]);
+        return redirect()->route('suratmasuk.edit', $request->id_surat)->with('success', 'Disposisi berhasil ditambahkan.');
 
-        return redirect()->route('disposisi.index')->with('success', 'Disposisi berhasil ditambahkan.');
     }
 
     public function edit($id)

@@ -116,7 +116,7 @@
             
               <!-- Nav Item - Pages Collapse Menu -->
             @role('admin')
-            <li class="nav-item">
+            <li class="nav-item {{ $menupengguna ?? '' }}">
                 <a class="nav-link" href="{{ route('user.index') }}" >
                     <i class="fas fa-user fa-fw "></i>
                     <span>Pengguna</span>
@@ -285,6 +285,9 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+        <!-- Chart.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
     @stack('scripts')    

@@ -12,7 +12,7 @@
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
+                        <div class="col mr-2"> 
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Surat Masuk</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $jumlahSuratMasuk }}</div>
@@ -101,5 +101,54 @@
         </div>
 
     </div>
+    <div class="card shadow mb-4 w-100">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Grafik Surat Masuk & Keluar (7 Hari Terakhir)</h6>
+    </div>
+    <div class="card-body">
+        <canvas id="suratChart"></canvas>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('suratChart').getContext('2d');
+
+    const suratChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {!! json_encode($chartDates) !!},
+            datasets: [
+                {
+                    label: 'Surat Masuk',
+                    data: {!! json_encode($chartMasuk) !!},
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                },
+                {
+                    label: 'Surat Keluar',
+                    data: {!! json_encode($chartKeluar) !!},
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    });
+</script>
+
 
 @endsection

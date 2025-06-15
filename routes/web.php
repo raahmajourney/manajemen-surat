@@ -56,7 +56,10 @@ Route::middleware(['auth'])->group(function () {
 
 // Route untuk Admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::resource('pengguna', UserController::class)->names('user');
+   // Route::resource('pengguna', UserController::class)->names('user');
+    Route::get('pengguna', [UserController::class, 'index'])->name('user.index');
+    Route::post('pengguna', [UserController::class, 'store'])->name('user.store');
+    Route::post('pengguna/status', [UserController::class, 'updateStatus'])->name('user.updateStatus');
 
 
     Route::get('pengaturan', [PengaturanController::class, 'index'])->name('pengaturan');
@@ -67,10 +70,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('unitkerja/{id}', [UnitkerjaController::class, 'update'])->name('unitkerja.update');
     Route::get('unitkerja/{id}/edit', [UnitkerjaController::class, 'edit'])->name('unitkerja.edit');
     Route::delete('unitkerja/{id}', [UnitkerjaController::class, 'destroy'])->name('unitkerja.destroy');
-
-    
-   
-    
 
 });
 
@@ -108,9 +107,6 @@ Route::middleware(['auth', 'role:admin|staf'])->group(function () {
     Route::put('disposisi{id}', [DisposisiController::class,'update'])->name('disposisi.update');
     Route::get('disposisi/data', [DisposisiController::class, 'getData'])->name('disposisi.data');
     Route::get('disposisi/{id}', [DisposisiController::class, 'show'])->name('disposisi.show');
-
-
-    
 
     Route::get('logsurat', [LogSuratController::class, 'index'])->name('logsurat.index');
 });

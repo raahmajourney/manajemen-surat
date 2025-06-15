@@ -4,37 +4,55 @@ namespace App\Http\Controllers;
 
 use App\Models\Surat;
 use App\Models\Disposisi;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+
     public function index()
 {
-    $unitKerjaId = Auth::user()->unit_kerja_id; // Ambil unit kerja user
+    $unitKerjaId = Auth::user()->unit_kerja_id;
 
-    $data = [
-        "title" => "Dashboard",
-        "menuDashboard" => "active",
+    $today = Carbon::today()->format('Y-m-d');
 
-        // Hitung jumlah surat per jenis, khusus milik unit kerja user
-        "jumlahSuratMasuk" => Surat::where('id_jenis_surat', 1)
-            ->where('unit_kerja_id', $unitKerjaId)->count(),
+    return view('dashboard', [
+        'title' => 'Dashboard',
+        'menuDashboard' => 'active',
 
-        "jumlahSuratKeluar" => Surat::where('id_jenis_surat', 2)
-            ->where('unit_kerja_id', $unitKerjaId)->count(),
+        'jumlahSuratMasuk' => $this->getJumlahSurat($unitKerjaId, 1),
+        'jumlahSuratKeluar' => $this->getJumlahSurat($unitKerjaId, 2),
+        'jumlahSuratKeputusan' => $this->getJumlahSurat($unitKerjaId, 3),
+        'jumlahSuratDisposisi' => $this->getJumlahDisposisi($unitKerjaId),
 
-        "jumlahSuratKeputusan" => Surat::where('id_jenis_surat', 3)
-            ->where('unit_kerja_id', $unitKerjaId)->count(),
-
-        // Disposisi juga bisa difilter jika berelasi dengan surat dan unit kerja
-        "jumlahSuratDisposisi" => Disposisi::whereHas('surat', function($q) use ($unitKerjaId) {
-            $q->where('unit_kerja_id', $unitKerjaId);
-        })->count(),
-    ];
-
-    return view('dashboard', $data);
+        // Chart Hari Ini
+        'chartDates' => [Carbon::parse($today)->format('d M')],
+        'chartMasuk' => [$this->getJumlahSuratHarian($unitKerjaId, 1, $today)],
+        'chartKeluar' => [$this->getJumlahSuratHarian($unitKerjaId, 2, $today)],
+    ]);
 }
+
+private function getJumlahSurat($unitKerjaId, $jenisSurat)
+{
+    return Surat::where('id_jenis_surat', $jenisSurat)
+        ->where('unit_kerja_id', $unitKerjaId)
+        ->count();
+}
+
+private function getJumlahSuratHarian($unitKerjaId, $jenisSurat, $date)
+{
+    return Surat::whereDate('created_at', $date)
+        ->where('id_jenis_surat', $jenisSurat)
+        ->where('unit_kerja_id', $unitKerjaId)
+        ->count();
+}
+
+private function getJumlahDisposisi($unitKerjaId)
+{
+    return Disposisi::where('id_unit_kerja', $unitKerjaId)->count();
+}
+
 
 }
 

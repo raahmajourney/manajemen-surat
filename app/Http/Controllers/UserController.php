@@ -13,7 +13,7 @@ class UserController extends Controller
 
         $data = array(
             "title" => "Pengguna",
-            "menuunitkerja" => "active",
+            "menupengguna" => "active",
 
         );
 
@@ -22,7 +22,10 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::with('roles')->paginate(10);
+        $users = User::with('roles')
+        ->orderBy('created_at', 'desc') // ← Tambahkan ini untuk urutan terbaru di atas
+        ->paginate(10);
+
         $unitKerjas = UnitKerja::all(); // ✅ Tambahkan ini
 
         return view('user.index', compact('users', 'unitKerjas')); // ✅ Sertakan ke view
@@ -43,6 +46,8 @@ public function store(Request $request)
         'password' => 'required',
         'unit_kerja_id' => 'required|exists:unit_kerja,id',
         'role' => 'required|in:admin,dosen,staf',
+        'status' => 'required|in:aktif,tidak aktif',
+
     ]);
 
     $user = User::create([
@@ -50,11 +55,25 @@ public function store(Request $request)
         'email' => $request->email,
         'password' => bcrypt($request->password),
         'unit_kerja_id' => $request->unit_kerja_id,
+        'status' => $request->status,
     ]);
 
     $user->assignRole($request->role);
 
     return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan.');
 }
-    
+    public function updateStatus(Request $request)
+{
+    $request->validate([
+        'user_id' => 'required|exists:users,id',
+        'status' => 'required|in:aktif,tidak aktif',
+    ]);
+
+    $user = User::findOrFail($request->user_id);
+    $user->status = $request->status;
+    $user->save();
+
+    return response()->json(['success' => true]);
+}
+
 }
