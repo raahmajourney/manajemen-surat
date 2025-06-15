@@ -11,11 +11,21 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
 
-    public function index()
+  public function index()
 {
     $unitKerjaId = Auth::user()->unit_kerja_id;
 
-    $today = Carbon::today()->format('Y-m-d');
+    $chartDates = [];
+    $chartMasuk = [];
+    $chartKeluar = [];
+
+    // Ambil data 7 hari terakhir
+    for ($i = 6; $i >= 0; $i--) {
+        $date = Carbon::today()->subDays($i);
+        $chartDates[] = $date->format('d M'); // Contoh: 15 Jun
+        $chartMasuk[] = $this->getJumlahSuratHarian($unitKerjaId, 1, $date->toDateString());
+        $chartKeluar[] = $this->getJumlahSuratHarian($unitKerjaId, 2, $date->toDateString());
+    }
 
     return view('dashboard', [
         'title' => 'Dashboard',
@@ -26,12 +36,12 @@ class DashboardController extends Controller
         'jumlahSuratKeputusan' => $this->getJumlahSurat($unitKerjaId, 3),
         'jumlahSuratDisposisi' => $this->getJumlahDisposisi($unitKerjaId),
 
-        // Chart Hari Ini
-        'chartDates' => [Carbon::parse($today)->format('d M')],
-        'chartMasuk' => [$this->getJumlahSuratHarian($unitKerjaId, 1, $today)],
-        'chartKeluar' => [$this->getJumlahSuratHarian($unitKerjaId, 2, $today)],
+        'chartDates' => $chartDates,
+        'chartMasuk' => $chartMasuk,
+        'chartKeluar' => $chartKeluar,
     ]);
 }
+
 
 private function getJumlahSurat($unitKerjaId, $jenisSurat)
 {

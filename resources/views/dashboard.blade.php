@@ -110,31 +110,29 @@
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
     const ctx = document.getElementById('suratChart').getContext('2d');
 
     const suratChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: {!! json_encode($chartDates) !!},
             datasets: [
                 {
                     label: 'Surat Masuk',
                     data: {!! json_encode($chartMasuk) !!},
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    fill: true
+                    borderWidth: 1
                 },
                 {
                     label: 'Surat Keluar',
                     data: {!! json_encode($chartKeluar) !!},
-                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
                     borderColor: 'rgba(255, 206, 86, 1)',
-                    borderWidth: 2,
-                    tension: 0.4,
-                    fill: true
+                    borderWidth: 1
                 }
             ]
         },
@@ -149,6 +147,7 @@
         }
     });
 </script>
+
 
 
 @endsection
