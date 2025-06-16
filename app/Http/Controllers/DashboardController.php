@@ -52,7 +52,7 @@ private function getJumlahSurat($unitKerjaId, $jenisSurat)
 
 private function getJumlahSuratHarian($unitKerjaId, $jenisSurat, $date)
 {
-    return Surat::whereDate('created_at', $date)
+    return Surat::whereDate('tanggal_surat', $date) // <--- pakai tanggal_surat
         ->where('id_jenis_surat', $jenisSurat)
         ->where('unit_kerja_id', $unitKerjaId)
         ->count();

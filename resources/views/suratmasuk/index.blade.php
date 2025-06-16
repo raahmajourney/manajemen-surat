@@ -44,6 +44,17 @@
             <label for="isi">Isi Surat</label>
             <textarea class="form-control" id="isi" name="isi" rows="4" placeholder="Masukkan isi surat"></textarea>
           </div>
+
+            <div class="form-group col-md-6">
+            <label for="unit_kerja_id">Unit Kerja Tujuan</label>
+            <select class="form-control" id="unit_kerja_id" name="unit_kerja_id" required>
+                <option value="">-- Pilih Unit Kerja --</option>
+                @foreach ($unitKerjas as $unit)
+                    <option value="{{ $unit->id }}">{{ $unit->nama_unit }}</option>
+                @endforeach
+            </select>
+        </div>
+
         
           <div class="form-row">
 

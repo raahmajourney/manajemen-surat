@@ -91,6 +91,17 @@ class Surat extends Model
     {
         return $this->belongsTo(UnitKerja::class, 'unit_kerja_id');
     }
+    
+
+    public function unitKerjaPenerima()
+    {
+        return $this->belongsTo(UnitKerja::class, 'unit_kerja_id');
+    }
+
+    public function unitKerjaPengirim()
+    {
+        return $this->belongsTo(UnitKerja::class, 'id_unit_kerja_pengirim');
+    }
 
 
 }

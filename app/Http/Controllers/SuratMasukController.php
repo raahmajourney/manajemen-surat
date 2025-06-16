@@ -51,6 +51,7 @@ class SuratMasukController extends Controller
             'suratmasuk' => 'active',
             'surats' => $surats,
             'jenisSurats' => JenisSurat::all(),
+            'unitKerjas' => UnitKerja::all(),
         ]);
     }
 
@@ -130,6 +131,7 @@ public function getData(Request $request)
         'tanggal_surat' => 'required|date',
         'status' => 'required|in:aktif,arsip',
         'file_surat' => 'nullable|file|mimes:pdf|max:2048',
+        'unit_kerja_id' => 'required|exists:unit_kerja,id', // PENERIMA surat
 
     ]);
 
@@ -144,7 +146,8 @@ public function getData(Request $request)
         'judul' => $validated['judul'],
         'isi' => $validated['isi'],
         'id_jenis_surat' => $validated['id_jenis_surat'],
-        'unit_kerja_id' => Auth::user()->unit_kerja_id, // ✅ di-set langsung di sini
+        'unit_kerja_id' => Auth::user()->unit_kerja_id, // penerima
+        'id_unit_kerja_pengirim' => Auth::user()->unit_kerja_id, // pengirim surat 
         'nama_pengirim' => $validated['nama_pengirim'],
         'tanggal_surat' => $validated['tanggal_surat'],
         'status' => $validated['status'],

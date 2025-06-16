@@ -101,12 +101,12 @@
         </div>
 
     </div>
-    <div class="card shadow mb-4 w-100">
-    <div class="card-header py-3">
+    <div class="card shadow mb-4 w-54">
+    <div class="card-header py-1">
         <h6 class="m-0 font-weight-bold text-primary">Grafik Surat Masuk & Keluar (7 Hari Terakhir)</h6>
     </div>
     <div class="card-body">
-        <canvas id="suratChart"></canvas>
+        <canvas id="suratChart" height="77"></canvas>
     </div>
 </div>
 
@@ -130,8 +130,8 @@
                 {
                     label: 'Surat Keluar',
                     data: {!! json_encode($chartKeluar) !!},
-                    backgroundColor: 'rgba(255, 206, 86, 0.6)',
-                    borderColor: 'rgba(255, 206, 86, 1)',
+                     backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 }
             ]
